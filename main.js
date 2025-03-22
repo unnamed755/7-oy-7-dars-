@@ -5,8 +5,13 @@ async function getCountries() {
         renderCountries(countries);
 
         // Qidiruv eventini qo'shish
-        document.getElementById('search-box').addEventListener('input', function () {
-            filterCountries(countries, this.value);
+        document.getElementById('search-box').addEventListener('input', function() {
+            filterCountries(countries);
+        });
+
+        // Qit'alar bo'yicha filtr
+        document.getElementById('continent-filter').addEventListener('change', function() {
+            filterCountries(countries);
         });
 
     } catch (error) {
@@ -21,10 +26,10 @@ function renderCountries(countries) {
     countries.forEach(country => {
         const countryCard = document.createElement('div');
         countryCard.classList.add('country-card');
-
+        
         countryCard.innerHTML = `
             <div class="flag-container">
-                <img class="flag" src="${country.flags?.svg || country.flags?.png}" alt="${country.name.common} bayrog'i">
+                <img class="flag" src="${country.flags?.svg}" alt="${country.name.common} bayrog'i">
             </div>
             <div class="info">
                 <h3 class="country-name">${country.name.common}</h3>
@@ -38,12 +43,24 @@ function renderCountries(countries) {
     });
 }
 
-// Qidiruv funksiyasi
-function filterCountries(countries, searchText) {
-    const filtered = countries.filter(country =>
-        country.name.common.toLowerCase().includes(searchText.toLowerCase())
-    );
+// Qidiruv va filtr
+function filterCountries(countries) {
+    const searchText = document.getElementById('search-box').value.toLowerCase();
+    const selectedContinent = document.getElementById('continent-filter').value;
+
+    const filtered = countries.filter(country => {
+        const matchName = country.name.common.toLowerCase().includes(searchText);
+        const matchContinent = selectedContinent === "all" || country.region === selectedContinent;
+        return matchName && matchContinent;
+    });
+
     renderCountries(filtered);
 }
+
+// Dark mode
+document.getElementById('theme-toggle').addEventListener('click', function() {
+    document.body.classList.toggle('dark-mode');
+    this.textContent = document.body.classList.contains('dark-mode') ? 'Light Mode' : 'Dark Mode';
+});
 
 document.addEventListener('DOMContentLoaded', getCountries);

@@ -3,15 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mamlakatlar bayroqlari</title>
+    <title>Country Flags</title>
     <link rel="stylesheet" href="./main.css">
 </head>
 <body>
 
-    <div class="search-container">
-        <input type="text" id="search-box" placeholder="Mamlakatni qidiring...">
-    </div>
+    <h1>Country Flags</h1>
     
+    <div class="controls">
+        <button id="theme-toggle">Dark Mode</button>
+        <input type="text" id="search-box" placeholder="Search for a country...">
+        <select id="continent-filter">
+            <option value="all">All Continents</option>
+            <option value="Africa">Africa</option>
+            <option value="Americas">Americas</option>
+            <option value="Asia">Asia</option>
+            <option value="Europe">Europe</option>
+            <option value="Oceania">Oceania</option>
+        </select>
+    </div>
+
     <div id="countries-container"></div>
 
     <script src="./main.js"></script>
